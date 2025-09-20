@@ -1,0 +1,55 @@
+<div class="container-login">
+  <mat-card class="card-login">
+    <h2 class="mb-4">Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
+      <!-- Username -->
+      <label class="lable-field">Username</label>
+      <mat-form-field appearance="outline" class="w-full">
+        <input
+          matInput
+          formControlName="username"
+          placeholder="Enter username"
+        />
+        <mat-error
+          *ngIf="
+            loginForm.get('username')?.hasError('required') &&
+            (loginForm.get('username')?.touched ||
+              loginForm.get('username')?.dirty)
+          "
+        >
+          Username is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <label class="lable-field">Password</label>
+      <mat-form-field appearance="outline" class="w-full">
+        <input
+          matInput
+          formControlName="password"
+          type="password"
+          placeholder="Enter password"
+        />
+        <mat-error
+          *ngIf="
+            loginForm.get('password')?.hasError('required') &&
+            (loginForm.get('password')?.touched ||
+              loginForm.get('password')?.dirty)
+          "
+        >
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Login Button -->
+      <button
+        mat-raised-button
+        class="button-login"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
+    </form>
+  </mat-card>
+</div>

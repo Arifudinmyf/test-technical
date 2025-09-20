@@ -1,0 +1,129 @@
+<div class="rounded-xl dark:bg-gray-800 shadow-lg p-6">
+    <div class="search-bar">
+        <div class="search-input">
+            <input type="text" [formControl]="searchUsername" placeholder="Search Username"/>
+            <input type="text" [formControl]="searchStatus" placeholder="Search Status"/>
+            <button (click)="applySearch()">
+                Search
+            </button>
+        </div>
+
+        <div class="add-button">
+            <button (click)="navigateToAdd()" >
+                Add Employee
+            </button>
+        </div>
+    </div>
+
+    <mat-card class="card-tables">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full" matSort>
+
+            <!-- No Column -->
+            <ng-container matColumnDef="no">
+                <th mat-header-cell *matHeaderCellDef> No </th>
+                <td mat-cell *matCellDef="let e; let i = index" data-label="No">
+                    <span>{{ page * pageSize + i + 1 }}</span>
+                </td>
+            </ng-container>
+
+            <!-- Username -->
+            <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+                <td mat-cell *matCellDef="let e" data-label="Username">
+                    <span>{{ e.username }}</span>
+                </td>
+            </ng-container>
+
+            <!-- First Name -->
+            <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                <td mat-cell *matCellDef="let e" data-label="First Name">
+                    <span>{{ e.firstName }}</span>
+                </td>
+            </ng-container>
+
+            <!-- Last Name -->
+            <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+                <td mat-cell *matCellDef="let e" data-label="Last Name">
+                    <span>{{ e.lastName }}</span>
+                </td>
+            </ng-container>
+
+            <!-- Email -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                <td mat-cell *matCellDef="let e" data-label="Email">
+                    <span>{{ e.email }}</span>
+                </td>
+            </ng-container>
+
+            <!-- Birth Date -->
+            <ng-container matColumnDef="birthDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Birth Date </th>
+                <td mat-cell *matCellDef="let e" data-label="Birth Date">
+                    <span>{{ e.birthDate | date: "dd/MM/yyyy" }}</span>
+                </td>
+            </ng-container>
+
+            <!-- Basic Salary -->
+            <ng-container matColumnDef="basicSalary">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Basic Salary </th>
+                <td mat-cell *matCellDef="let e" data-label="Basic Salary">
+                    <span>{{ e.basicSalary | currency : "Rp. " }}</span>
+                </td>
+            </ng-container>
+
+            <!-- Status -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let e" data-label="Status">
+                    <span [ngClass]="{
+                                        'text-green-600 tex-sm': e.status === 'ACTIVE',
+                                        'text-red-600 tex-sm': e.status === 'INACTIVE',
+                                        'text-yellow-600 tex-sm': e.status === 'PROBATION'
+                                    }">
+                        {{ e.status }}
+                    </span>
+                </td>
+            </ng-container>
+
+            <!-- Group -->
+            <ng-container matColumnDef="group">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Group </th>
+                <td mat-cell *matCellDef="let e" data-label="Group">
+                    <span>{{ e.group }}</span>
+                </td>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
+                <td mat-cell *matCellDef="let el">
+                    <button mat-icon-button class="text-blue-600 font-semibold py-2 px-6 rounded hover:bg-blue-200"
+                        (click)="onDetail(el)">
+                        <mat-icon class="text-blue-600">visibility</mat-icon>
+                    </button>
+                    <button mat-icon-button class="text-black font-semibold py-2 px-6 rounded hover:bg-yellow-200"
+                        (click)="onEdit(el)">
+                        <mat-icon class="text-yellow-500">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button class="text-white font-semibold py-2 px-6 rounded hover:bg-red-200"
+                        (click)="onDelete(el)">
+                        <mat-icon class="text-red-600">delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- Header & Row -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <!-- Paginator -->
+        <mat-paginator [pageSizeOptions]="pageOptions" [pageSize]="pageSize" [length]="total"
+            (page)="onPageChange($event)">
+        </mat-paginator>
+
+    </mat-card>
+</div>

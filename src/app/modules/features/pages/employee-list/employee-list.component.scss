@@ -1,0 +1,58 @@
+.mat-mdc-table,
+.mat-mdc-paginator {
+  @apply bg-white dark:bg-gray-200 shadow-none;
+}
+
+.mat-mdc-row,
+.mat-mdc-cell,
+.mat-mdc-header-row,
+.mat-mdc-header-cell {
+  @apply bg-transparent
+}
+.mat-mdc-header-cell {
+  @apply font-semibold text-gray-500 dark:text-gray-500;
+
+}
+
+.mat-mdc-paginator-page-size {
+    @apply w-full font-semibold text-gray-500 dark:text-gray-500;
+}
+
+td[mat-cell] {
+  @apply text-sm text-gray-500 dark:text-gray-500;
+}
+
+.search-bar {
+    @apply flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4;
+
+    .search-input {
+        @apply flex w-10 sm:w-10 flex-1 gap-2;
+
+        input {
+            @apply w-64 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+        }
+        button {
+            @apply bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600;
+        }
+    }
+
+    .add-button {
+        @apply w-full sm:w-auto;
+
+        button {
+            @apply w-full sm:w-auto px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition
+        }
+    }
+}
+
+.card-tables {
+    @apply w-full overflow-x-auto border border-gray-200 rounded-xl
+}
+
+::ng-deep .mat-mdc-snack-bar-container.delete-snackbar .mdc-snackbar__surface {
+  @apply bg-red-600 text-white rounded-lg shadow-lg px-4 py-3;
+}
+
+::ng-deep .mat-mdc-snack-bar-container.delete-snackbar .mat-mdc-snack-bar-action {
+  @apply text-white font-bold;
+}

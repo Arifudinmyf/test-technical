@@ -1,0 +1,68 @@
+<div class="employee-detail">
+  <div class="employee-card">
+    
+    <!-- Header -->
+    <div class="employee-header">
+      <h1>Employee Details</h1>
+      <button (click)="goBack()" class="employee-btn">OK</button>
+    </div>
+
+    <!-- Content -->
+    <div class="employee-grid">
+      
+      <!-- Left Section -->
+      <div class="employee-section">
+        <div>
+          <h3>Username</h3>
+          <p>{{ employee?.username }}</p>
+        </div>
+        
+        <div>
+          <h3>Full Name</h3>
+          <p>{{ employee?.firstName }} {{ employee?.lastName }}</p>
+        </div>
+        
+        <div>
+          <h3>Email</h3>
+          <p class="email">{{ employee?.email }}</p>
+        </div>
+        
+        <div>
+          <h3>Birth Date</h3>
+          <p>{{ employee?.birthDate | date:'longDate' }}</p>
+        </div>
+      </div>
+      
+      <!-- Right Section -->
+      <div class="employee-section">
+        <div>
+          <h3>Basic Salary</h3>
+          <p class="salary">{{ employee?.basicSalary | currency:'Rp. ':'symbol':'1.2-2' }}</p>
+        </div>
+        
+        <div>
+          <h3>Status</h3>
+          <p>
+            <span [ngClass]="{
+              'status-active': employee?.status === 'ACTIVE',
+              'status-inactive': employee?.status === 'INACTIVE',
+              'status-probation': employee?.status === 'PROBATION'
+            }">
+              {{ employee?.status }}
+            </span>
+          </p>
+        </div>
+        
+        <div>
+          <h3>Group</h3>
+          <p>{{ employee?.group }}</p>
+        </div>
+        
+        <div>
+          <h3>Description</h3>
+          <p class="description">{{ employee?.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

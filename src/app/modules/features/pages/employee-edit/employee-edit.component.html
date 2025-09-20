@@ -1,0 +1,110 @@
+<div class="container mx-auto p-6 min-h-screen">
+  <div class="bg-green-50 rounded-xl shadow-lg p-8">
+    <h1 class="text-3xl font-bold mb-8 text-gray-800">Edit Employee</h1>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onUpdate()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Left Column -->
+        <div class="space-y-6">
+          <ng-container *ngFor="let field of ['username', 'firstName', 'lastName', 'email']">
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">{{ field | titlecase }}</label>
+              <mat-form-field appearance="outline" class="w-full">
+                <input matInput [formControlName]="field" [type]="field==='email' ? 'email' : 'text'" />
+                <mat-error *ngIf="employeeForm.get(field)?.hasError('required')">
+                  {{ field | titlecase }} tidak boleh kosong
+                </mat-error>
+                <mat-error *ngIf="field==='email' && employeeForm.get(field)?.hasError('email')">
+                  Format email tidak valid
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-6">
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Birth Date</label>
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput [matDatepicker]="picker" formControlName="birthDate" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="employeeForm.get('birthDate')?.hasError('required')">
+                Tanggal lahir tidak boleh kosong
+              </mat-error>
+              <mat-error *ngIf="employeeForm.get('birthDate')?.hasError('maxDate')">
+                Tanggal lahir tidak boleh lebih dari hari ini
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Basic Salary</label>
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput type="number" formControlName="basicSalary" />
+              <mat-error *ngIf="employeeForm.get('basicSalary')?.hasError('required')">
+                Salary tidak boleh kosong
+              </mat-error>
+              <mat-error *ngIf="employeeForm.get('basicSalary')?.hasError('pattern')">
+                Hanya boleh diisi angka
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Status</label>
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-select formControlName="status">
+                <mat-option value="ACTIVE">ACTIVE</mat-option>
+                <mat-option value="INACTIVE">INACTIVE</mat-option>
+                <mat-option value="PROBATION">PROBATION</mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeForm.get('status')?.hasError('required')">
+                Status tidak boleh kosong
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Group</label>
+            <mat-form-field appearance="outline" class="w-full">
+              <input type="text" matInput formControlName="group" [matAutocomplete]="auto" />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let group of filteredGroups$ | async" [value]="group">
+                  {{ group }}
+                </mat-option>
+                <mat-option *ngIf="(filteredGroups$ | async)?.length === 0" disabled>
+                  Groups tidak ditemukan
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="employeeForm.get('group')?.hasError('required')">
+                Group tidak boleh kosong
+              </mat-error>
+              <mat-hint>Cari Groups</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mt-6">
+        <label class="block text-gray-700 font-medium mb-1">Description</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <textarea matInput formControlName="description" rows="4" class="resize-none"></textarea>
+          <mat-error *ngIf="employeeForm.get('description')?.hasError('required')">
+            Deskripsi tidak boleh kosong
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-end mt-8 space-x-4">
+        <button mat-stroked-button color="warn" type="button" (click)="cancel()">Kembali</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="employeeForm.invalid">
+          Update Employee
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

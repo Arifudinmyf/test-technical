@@ -1,0 +1,7 @@
+::ng-deep .mat-mdc-snack-bar-container.save-snackbar .mdc-snackbar__surface {
+  @apply bg-yellow-600 text-white rounded-lg shadow-lg px-4 py-3;
+}
+
+::ng-deep .mat-mdc-snack-bar-container.save-snackbar .mat-mdc-snack-bar-action {
+  @apply text-white font-bold;
+}
