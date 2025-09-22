@@ -170,7 +170,17 @@ export class EmployeeListComponent
       next: (res) => {
         const response = res.data;
         this.employees = response.employees ?? [];
-        this.dataSource.data = this.employees;
+        if (this.queryParams && this.queryParams.searchUsername) {
+          this.dataSource.data = this.employees.filter(e =>
+            e.username.toLowerCase().includes(this.queryParams?.searchUsername?.toLowerCase() ?? '')
+          );
+        } else if (this.queryParams && this.queryParams.searchStatus) {
+          this.dataSource.data = this.employees.filter(e =>
+            e.status.toLowerCase().includes(this.queryParams?.searchStatus?.toLowerCase() ?? '')
+          );
+        } else {
+          this.dataSource.data = this.employees;
+        }
         this.queryParams.page = response.page ?? req.page;
         this.queryParams.pageSize = this.pageSize;
         this.total = response.total ?? 0;
